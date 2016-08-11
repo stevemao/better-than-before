@@ -59,38 +59,37 @@ You might say it is very easy to find a smarter way. This is true for use-cases 
 ## Install
 
 ```
-$ npm install --save better-than-before
+$ npm install --save-dev better-than-before
 ```
 
 
 ## Usage
 
+With this module, you could simplify your setup using beautiful declarative DSL syntax:
+
 ```js
-const betterThanBefore = require('better-than-before');
+import { setups,  preparing } from 'better-than-before';
 
-betterThanBefore('unicorns');
-//=> 'unicorns & rainbows'
+setups([
+	() => {
+		// setup for all tests
+	},
+	() => {
+		// setup for all tests except for tests only need the first setup
+	},
+	...
+]);
+
+test('A', () => {
+	preparing(1); // I only need the first setup
+});
+
+test('B', () => {
+	preparing(2); // I need both first and second setup
+});
+
+...
 ```
-
-
-## API
-
-### betterThanBefore(input, [options])
-
-#### input
-
-Type: `string`
-
-Lorem ipsum.
-
-#### options
-
-##### foo
-
-Type: `boolean`<br>
-Default: `false`
-
-Lorem ipsum.
 
 
 ## Caveat
