@@ -1,10 +1,15 @@
 'use strict';
-module.exports = (input, opts) => {
-	if (typeof input !== 'string') {
-		throw new TypeError(`Expected a string, got ${typeof input}`);
+var once = require('once');
+var setups;
+
+exports.setups = function (fns) {
+	setups = fns.map(function (fn) {
+		return once(fn);
+	});
+};
+
+exports.preparing = function (n) {
+	for (var i = 0; i < setups.length && i < n; i++) {
+		setups[i]();
 	}
-
-	opts = opts || {};
-
-	return input + ' & ' + (opts.postfix || 'rainbows');
 };

@@ -21,15 +21,15 @@
   "keywords": [
     ""
   ],
-  "dependencies": {},
+  "dependencies": {
+    "once": "^1.3.3"
+  },
   "devDependencies": {
     "ava": "^0.16.0",
     "coveralls": "^2.11.12",
     "nyc": "^7.1.0",
+    "sinon": "^1.17.5",
     "xo": "^0.16.0"
-  },
-  "xo": {
-    "esnext": true
   },
   "nyc": {
     "reporter": [
