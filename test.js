@@ -1,4 +1,3 @@
-/* eslint-env es6 */
 import test from 'ava';
 import {spy} from 'sinon';
 import {setups, preparing} from './';
