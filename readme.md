@@ -68,7 +68,13 @@ $ npm install --save-dev better-than-before
 With this module, you could simplify your setup using beautiful declarative DSL syntax:
 
 ```js
-import { setups,  preparing } from 'better-than-before';
+// class
+import BetterThanBefore from 'better-than-before';
+import { setups,  preparing } = new BetterThanBefore();
+
+// factory
+import betterThanBefore from 'better-than-before';
+import { setups,  preparing } = betterThanBefore();
 
 setups([
 	() => {
