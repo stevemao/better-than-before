@@ -1,6 +1,7 @@
 'use strict';
-/* eslint no-var: 0 */
+/* eslint no-var: 0, prefer-arrow-callback: */
 var once = require('once');
+
 var setups;
 
 exports.setups = function (fns) {
