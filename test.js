@@ -28,6 +28,18 @@ function run(t, setups, preparing) {
 test('class', t => {
 	const {setups, preparing} = new BetterThanBefore();
 	run(t, setups, preparing);
+
+	const betterThanBefore = new BetterThanBefore();
+	const fn1 = spy();
+	const fn2 = spy();
+	betterThanBefore.setups([
+		fn1,
+		fn2
+	]);
+	betterThanBefore.preparing(2);
+	t.true(fn1.calledOnce);
+	t.true(fn2.calledOnce);
+	t.true(fn1.calledBefore(fn2));
 });
 
 test('factory', t => {
