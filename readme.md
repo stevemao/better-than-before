@@ -97,6 +97,42 @@ test('B', () => {
 ...
 ```
 
+### Not in order?
+
+All you need to do is to provide a teardown function to `tearsWithJoy`. The teardown function needs to clean up all the setups and once `preparing()` is called, it will rebuild the setups that's needed.
+
+```js
+// class
+import BetterThanBefore from 'better-than-before';
+import { setups,  preparing, tearsWithJoy } = new BetterThanBefore();
+
+setups([
+	() => {
+		// setup for all tests
+	},
+	() => {
+		// setup for all tests except for tests only need the first setup
+	},
+	...
+]);
+
+tearsWithJoy(() => {
+	// teardown the setups!
+});
+
+test('B', () => {
+	preparing(2); // I need both first and second setup
+});
+
+test('A', () => {
+	// teardown is run
+	// then rerun the first setup
+	preparing(1); // I only need the first setup
+});
+
+...
+```
+
 
 ## Caveat
 

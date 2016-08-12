@@ -6,6 +6,7 @@ import betterThanBefore from './index';
 function run(t, setups, preparing) {
 	const fn1 = spy();
 	const fn2 = spy();
+
 	setups([
 		fn1,
 		fn2
@@ -45,4 +46,30 @@ test('class', t => {
 test('factory', t => {
 	const {setups, preparing} = betterThanBefore();
 	run(t, setups, preparing);
+});
+
+test('not in order', t => {
+	const {setups, preparing, tearsWithJoy} = betterThanBefore();
+
+	const fn1 = spy();
+	const fn2 = spy();
+	const fn3 = spy();
+
+	setups([
+		fn1,
+		fn2
+	]);
+
+	tearsWithJoy(fn3);
+
+	preparing(2);
+	t.true(fn1.calledOnce);
+	t.true(fn2.calledOnce);
+	t.true(fn3.notCalled);
+
+	preparing(1);
+	t.true(fn1.calledTwice);
+	t.true(fn2.calledOnce);
+	t.true(fn1.calledBefore(fn2));
+	t.true(fn3.calledOnce);
 });
