@@ -26,8 +26,12 @@ module.exports = function BetterThanBefore() {
 
 	this.preparing = function (n) {
 		if (N > n) {
-			setups = toOnce(fns);
-			teardown();
+			if (teardown) {
+				setups = toOnce(fns);
+				teardown();
+			} else {
+				throw new Error('You have some extra setups that you don\'t need for this test block.\nProvide a teardown function with `tearsWithJoy` to clean up all the setups');
+			}
 		}
 
 		for (var i = 0; i < setups.length && i < n; i++) {

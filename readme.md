@@ -99,7 +99,7 @@ test('B', () => {
 
 ### Not in order?
 
-All you need to do is to provide a teardown function to `tearsWithJoy`. The teardown function needs to clean up all the setups and once `preparing()` is called, it will rebuild the setups that's needed.
+All you need to do is to provide a teardown function with `tearsWithJoy`. The teardown function needs to clean up all the setups and once `preparing()` is called, it will rebuild the setups that's needed.
 
 ```js
 // class

@@ -73,3 +73,21 @@ test('not in order', t => {
 	t.true(fn1.calledBefore(fn2));
 	t.true(fn3.calledOnce);
 });
+
+test('not in order without tearsWithJoy', t => {
+	const {setups, preparing} = betterThanBefore();
+
+	const fn1 = spy();
+	const fn2 = spy();
+
+	setups([
+		fn1,
+		fn2
+	]);
+
+	preparing(2);
+
+	t.throws(() => {
+		preparing(1);
+	});
+});
