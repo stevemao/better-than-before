@@ -106,3 +106,19 @@ test('return all setup return values', t => {
 	t.deepEqual(preparing(1), [8]);
 	t.deepEqual(preparing(2), [8, 42]);
 });
+
+test('fn2 can access returned value of f1', t => {
+	const {setups, preparing} = betterThanBefore();
+
+	const fn1 = stub().returns(8);
+	const fn2 = function (ret) {
+		t.deepEqual(ret, [8]);
+	};
+
+	setups([
+		fn1,
+		fn2
+	]);
+
+	preparing(2);
+});

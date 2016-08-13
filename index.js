@@ -37,7 +37,7 @@ module.exports = function BetterThanBefore() {
 		var ret = [];
 
 		for (var i = 0; i < setups.length && i < n; i++) {
-			ret.push(setups[i]());
+			ret.push(setups[i](ret));
 		}
 
 		N = n;

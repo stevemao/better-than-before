@@ -81,7 +81,9 @@ setups([
 		// setup for all tests
 		return 8; // optionally returns something
 	},
-	() => {
+	(ret) => { // next setup can access the return values of all previous setups
+		ret
+		//=> [8]
 		// setup for all tests except for tests only need the first setup
 		return 42; // optionally returns something
 	},
