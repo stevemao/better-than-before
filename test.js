@@ -1,5 +1,5 @@
 import test from 'ava';
-import {spy} from 'sinon';
+import {spy, stub} from 'sinon';
 import BetterThanBefore from './';
 import betterThanBefore from './index';
 
@@ -90,4 +90,19 @@ test('not in order without tearsWithJoy', t => {
 	t.throws(() => {
 		preparing(1);
 	});
+});
+
+test('return all setup return values', t => {
+	const {setups, preparing} = betterThanBefore();
+
+	const fn1 = stub().returns(8);
+	const fn2 = stub().returns(42);
+
+	setups([
+		fn1,
+		fn2
+	]);
+
+	t.deepEqual(preparing(1), [8]);
+	t.deepEqual(preparing(2), [8, 42]);
 });

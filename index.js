@@ -34,11 +34,15 @@ module.exports = function BetterThanBefore() {
 			}
 		}
 
+		var ret = [];
+
 		for (var i = 0; i < setups.length && i < n; i++) {
-			setups[i]();
+			ret.push(setups[i]());
 		}
 
 		N = n;
+
+		return ret;
 	};
 
 	this.tearsWithJoy = function (fn) {

@@ -79,19 +79,23 @@ import { setups,  preparing } = betterThanBefore();
 setups([
 	() => {
 		// setup for all tests
+		return 8; // optionally returns something
 	},
 	() => {
 		// setup for all tests except for tests only need the first setup
+		return 42; // optionally returns something
 	},
 	...
 ]);
 
 test('A', () => {
 	preparing(1); // I only need the first setup
+	// returns [8]
 });
 
 test('B', () => {
 	preparing(2); // I need both first and second setup
+	// returns [8, 42]
 });
 
 ...
