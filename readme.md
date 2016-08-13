@@ -137,6 +137,7 @@ test('A', () => {
 
 An optional `context` object can be passed to setup functions and returned by `preparing()`:
 
+```js
 setups([
 	(context) => {
 		context.number = 42;
@@ -157,6 +158,7 @@ test('B', () => {
 	preparing(2);
 	//=> {number: 42}
 });
+```
 
 
 ## Caveat
