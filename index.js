@@ -18,6 +18,7 @@ module.exports = function BetterThanBefore() {
 	var teardown;
 	var fns;
 	var N = 0;
+	var context = {};
 
 	this.setups = function (_fns_) {
 		fns = _fns_;
@@ -34,15 +35,13 @@ module.exports = function BetterThanBefore() {
 			}
 		}
 
-		var ret = [];
-
 		for (var i = 0; i < setups.length && i < n; i++) {
-			ret.push(setups[i](ret));
+			setups[i](context);
 		}
 
 		N = n;
 
-		return ret;
+		return context;
 	};
 
 	this.tearsWithJoy = function (fn) {

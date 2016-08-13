@@ -1,5 +1,5 @@
 import test from 'ava';
-import {spy, stub} from 'sinon';
+import {spy} from 'sinon';
 import BetterThanBefore from './';
 import betterThanBefore from './index';
 
@@ -92,33 +92,66 @@ test('not in order without tearsWithJoy', t => {
 	});
 });
 
-test('return all setup return values', t => {
+test('return context', t => {
 	const {setups, preparing} = betterThanBefore();
 
-	const fn1 = stub().returns(8);
-	const fn2 = stub().returns(42);
-
 	setups([
-		fn1,
-		fn2
+		function (context) {
+			context.number = 42;
+		},
+		function (context) {
+			context.helloWorld = 'hello world';
+		}
 	]);
 
-	t.deepEqual(preparing(1), [8]);
-	t.deepEqual(preparing(2), [8, 42]);
+	t.deepEqual(preparing(1), {number: 42});
+	t.deepEqual(preparing(2), {number: 42, helloWorld: 'hello world'});
 });
 
-test('fn2 can access returned value of f1', t => {
+test('overwrite context', t => {
 	const {setups, preparing} = betterThanBefore();
 
-	const fn1 = stub().returns(8);
-	const fn2 = function (ret) {
-		t.deepEqual(ret, [8]);
-	};
-
 	setups([
-		fn1,
-		fn2
+		function (context) {
+			context.number = 8;
+		},
+		function (context) {
+			context.number = 42;
+			context.helloWorld = 'hello world';
+		}
 	]);
 
+	t.deepEqual(preparing(1), {number: 8});
+	t.deepEqual(preparing(2), {number: 42, helloWorld: 'hello world'});
+});
+
+test('setup can access context', t => {
+	const {setups, preparing} = betterThanBefore();
+
+	setups([
+		function (context) {
+			context.number = 42;
+		},
+		function (context) {
+			t.deepEqual(context.number, 42);
+		}
+	]);
+
+	preparing(2);
+});
+
+test('setup can access context but first setup actually didn\'t run', t => {
+	const {setups, preparing} = betterThanBefore();
+
+	setups([
+		function (context) {
+			context.number = 42;
+		},
+		function (context) {
+			t.deepEqual(context.number, 42);
+		}
+	]);
+
+	preparing(1);
 	preparing(2);
 });

@@ -79,25 +79,19 @@ import { setups,  preparing } = betterThanBefore();
 setups([
 	() => {
 		// setup for all tests
-		return 8; // optionally returns something
 	},
-	(ret) => { // next setup can access the return values of all previous setups
-		ret
-		//=> [8]
+	() => {
 		// setup for all tests except for tests only need the first setup
-		return 42; // optionally returns something
 	},
 	...
 ]);
 
 test('A', () => {
 	preparing(1); // I only need the first setup
-	// returns [8]
 });
 
 test('B', () => {
 	preparing(2); // I need both first and second setup
-	// returns [8, 42]
 });
 
 ...
@@ -138,6 +132,31 @@ test('A', () => {
 
 ...
 ```
+
+### context
+
+An optional `context` object can be passed to setup functions and returned by `preparing()`:
+
+setups([
+	(context) => {
+		context.number = 42;
+	},
+	(context) => {
+		context.number
+		//=> 42
+	},
+	...
+]);
+
+test('A', () => {
+	preparing(1);
+	//=> {number: 42}
+});
+
+test('B', () => {
+	preparing(2);
+	//=> {number: 42}
+});
 
 
 ## Caveat
